@@ -10,3 +10,5 @@ public class RedisExampleApplication {
 		SpringApplication.run(RedisExampleApplication.class, args);
 	}
 }
+// build/libs/RedisExample-0.0.1-SNAPSHOT.jar
+// java -Dserver.port=8080 -jar RedisExample-0.0.1-SNAPSHOT.jar
