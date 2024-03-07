@@ -3,6 +3,8 @@ server:
     9093
 
 spring:
+  cache:
+    type: redis
   session:
     storage-type: redis
   redis:
