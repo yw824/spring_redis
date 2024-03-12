@@ -3,6 +3,7 @@ package com.leew.RedisExample.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ public class ChatService implements MessageListener {
     // 어떤 채널에서 수신할 지 설정하는 컨테이너
     @Autowired
     private RedisMessageListenerContainer container;
+
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
     @Override
     public void onMessage(Message message, byte[] pattern) {
@@ -37,6 +41,11 @@ public class ChatService implements MessageListener {
                 System.out.println("Quit....");
                 break;
             }
+
+            redisTemplate.convertAndSend(chatRoomName, line);
         }
+
+        // 메세지 리스너 제거
+        container.removeMessageListener(this);
     }
 }
